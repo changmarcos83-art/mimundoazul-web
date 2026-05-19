@@ -33,7 +33,7 @@ export function CartModal({ open, onClose, config }: Props) {
   };
 
   return (
-    <div className={`cart-overlay ${open ? 'open' : ''}`} onClick={onClose}>
+    <div className={`cart-overlay ${open ? 'active' : ''}`} onClick={onClose}>
       <div className="cart-modal" onClick={(e) => e.stopPropagation()}>
         <div className="cart-modal-header">
           <h2>🛒 Tu Carrito {count > 0 && <span style={{ opacity: 0.6, fontSize: 14 }}>({count})</span>}</h2>
