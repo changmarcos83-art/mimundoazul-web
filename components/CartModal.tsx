@@ -123,7 +123,7 @@ export function CartModal({ open, onClose, config }: Props) {
               ))}
             </div>
 
-            <div className="cart-modal-footer">
+            <div className="cart-modal-footer" style={{ display: 'flex' }}>
               <div className="cart-total">Total: ${total.toFixed(2)}</div>
               {config.pasarela_pago_activa !== 'true' && (
                 <p style={{ fontSize: 12, color: '#64748b', textAlign: 'center', marginBottom: 8 }}>
