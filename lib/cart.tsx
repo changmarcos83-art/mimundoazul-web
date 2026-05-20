@@ -11,6 +11,7 @@ import type { Producto } from './api';
 
 export interface CartItem {
   id: number;
+  sku: string;          // código del producto (se muestra en el mensaje de WhatsApp)
   nombre: string;
   precio: number;       // precio efectivo (promo si aplica, si no normal)
   imagenUrl?: string | null;
@@ -73,6 +74,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         ...prev,
         {
           id: p.id,
+          sku: p.sku,
           nombre: p.nombre,
           precio,
           imagenUrl: p.imagenUrl,
