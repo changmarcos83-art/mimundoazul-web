@@ -70,14 +70,23 @@ function ProductCard({ producto, onAdd }: { producto: Producto; onAdd: () => voi
     producto.descripcion ||
     '¡Excelente juego didáctico diseñado para estimular el aprendizaje y desarrollo de los más pequeños!';
 
+  const agotado = producto.agotado === true;
+
   return (
     <div
       ref={cardRef}
       className={`product-card ${visible ? 'animate-in' : ''}`}
       data-product-id={producto.id}
+      style={agotado ? { position: 'relative' } : undefined}
     >
-      <div className="product-img-wrap">
-        <div className="product-card-inner">
+      <div
+        className="product-img-wrap"
+        style={agotado ? { position: 'relative' } : undefined}
+      >
+        <div
+          className="product-card-inner"
+          style={agotado ? { filter: 'grayscale(80%) opacity(0.6)' } : undefined}
+        >
           <div className="product-card-front">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -95,8 +104,30 @@ function ProductCard({ producto, onAdd }: { producto: Producto; onAdd: () => voi
             </div>
           </div>
         </div>
+        {agotado && (
+          <div
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%) rotate(-8deg)',
+              background: 'rgba(15, 23, 42, 0.9)',
+              color: 'white',
+              padding: '10px 24px',
+              borderRadius: 8,
+              fontWeight: 900,
+              letterSpacing: 2,
+              fontSize: 18,
+              boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
+              pointerEvents: 'none',
+              zIndex: 5,
+            }}
+          >
+            AGOTADO
+          </div>
+        )}
       </div>
-      <div className="product-info">
+      <div className="product-info" style={agotado ? { opacity: 0.7 } : undefined}>
         <h3 className="product-name">{producto.nombre}</h3>
         <p className="product-sku">{producto.sku}</p>
         {precioOriginal ? (
@@ -154,16 +185,30 @@ function ProductCard({ producto, onAdd }: { producto: Producto; onAdd: () => voi
             ${precio.toFixed(2)}
           </p>
         )}
-        <button
-          className="btn-add-cart"
-          onClick={handleAdd}
-          style={{
-            background: feedback ? '#16a34a' : undefined,
-            transform: feedback ? 'scale(0.95)' : undefined,
-          }}
-        >
-          {feedback ? '✓ Agregado' : 'Añadir al carrito'}
-        </button>
+        {agotado ? (
+          <button
+            className="btn-add-cart"
+            disabled
+            style={{
+              background: '#9ca3af',
+              cursor: 'not-allowed',
+              opacity: 0.7,
+            }}
+          >
+            Agotado por el momento
+          </button>
+        ) : (
+          <button
+            className="btn-add-cart"
+            onClick={handleAdd}
+            style={{
+              background: feedback ? '#16a34a' : undefined,
+              transform: feedback ? 'scale(0.95)' : undefined,
+            }}
+          >
+            {feedback ? '✓ Agregado' : 'Añadir al carrito'}
+          </button>
+        )}
       </div>
     </div>
   );
