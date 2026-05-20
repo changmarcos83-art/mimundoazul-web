@@ -19,18 +19,18 @@ export default function HomePage() {
   const [cartOpen, setCartOpen] = useState(false);
 
   useEffect(() => {
-    Promise.all([
+    // allSettled: si uno falla, los otros siguen funcionando.
+    // Por ejemplo, si /testimonios todavía no está deployado (404),
+    // los productos y la configuración igual cargan.
+    Promise.allSettled([
       api.get<Producto[]>('/productos'),
       api.get<Configuracion>('/configuracion'),
       api.get<Testimonio[]>('/testimonios'),
     ])
       .then(([p, c, t]) => {
-        setProductos(p.data);
-        setConfig(c.data);
-        setTestimonios(t.data);
-      })
-      .catch((err) => {
-        console.error('Error cargando datos:', err);
+        if (p.status === 'fulfilled') setProductos(p.value.data);
+        if (c.status === 'fulfilled') setConfig(c.value.data);
+        if (t.status === 'fulfilled') setTestimonios(t.value.data);
       })
       .finally(() => setLoading(false));
   }, []);
