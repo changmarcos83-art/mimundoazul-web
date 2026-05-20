@@ -1,4 +1,9 @@
-export function Testimonios() {
+import type { Testimonio } from '@/lib/api';
+
+export function Testimonios({ testimonios }: { testimonios: Testimonio[] }) {
+  // Si no hay ninguno cargado, no mostramos la sección
+  if (testimonios.length === 0) return null;
+
   return (
     <section className="testimonials" id="testimonios">
       <div className="container">
@@ -7,34 +12,30 @@ export function Testimonios() {
           <p>Nuestras familias confían en Mi Mundo Azul para el aprendizaje de sus hijos.</p>
         </div>
         <div className="testimonials-grid">
-          <div className="glass-card testimonial-card">
-            <div className="stars">★★★★★</div>
-            <p>
-              &ldquo;Los juegos de construcción han transformado completamente la forma en que mi
-              hijo juega y aprende. ¡La calidad es premium y muy segura!&rdquo;
-            </p>
-            <div className="client-info">
-              <div className="client-avatar"></div>
-              <div>
-                <h4>María Gómez</h4>
-                <p>Mamá de Lucas (4 años)</p>
+          {testimonios.map((t) => (
+            <div key={t.id} className="glass-card testimonial-card">
+              <div className="stars">{'★'.repeat(t.estrellas)}</div>
+              <p>&ldquo;{t.mensaje}&rdquo;</p>
+              <div className="client-info">
+                <div
+                  className="client-avatar"
+                  style={
+                    t.avatarUrl
+                      ? {
+                          backgroundImage: `url(${t.avatarUrl})`,
+                          backgroundSize: 'cover',
+                          backgroundPosition: 'center',
+                        }
+                      : undefined
+                  }
+                />
+                <div>
+                  <h4>{t.nombre}</h4>
+                  {t.relacion && <p>{t.relacion}</p>}
+                </div>
               </div>
             </div>
-          </div>
-          <div className="glass-card testimonial-card">
-            <div className="stars">★★★★★</div>
-            <p>
-              &ldquo;Excelente atención y catálogo de productos. Los kits de arte estimulan su
-              imaginación a niveles increíbles. Totalmente recomendado.&rdquo;
-            </p>
-            <div className="client-info">
-              <div className="client-avatar"></div>
-              <div>
-                <h4>Carlos Ruiz</h4>
-                <p>Papá de Sofía (6 años)</p>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>

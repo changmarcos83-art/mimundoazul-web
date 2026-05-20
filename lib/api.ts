@@ -33,3 +33,14 @@ export interface Producto {
 }
 
 export type Configuracion = Record<string, string>;
+
+export interface Testimonio {
+  id: number;
+  nombre: string;
+  relacion?: string | null;
+  mensaje: string;
+  estrellas: number;
+  avatarUrl?: string | null;
+  orden: number;
+  activo: boolean;
+}

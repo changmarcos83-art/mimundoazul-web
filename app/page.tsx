@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { api, type Producto, type Configuracion } from '@/lib/api';
+import { api, type Producto, type Configuracion, type Testimonio } from '@/lib/api';
 import { Navbar } from '@/components/Navbar';
 import { Hero } from '@/components/Hero';
 import { SocialProof } from '@/components/SocialProof';
@@ -14,6 +14,7 @@ import { CartModal } from '@/components/CartModal';
 export default function HomePage() {
   const [productos, setProductos] = useState<Producto[]>([]);
   const [config, setConfig] = useState<Configuracion>({});
+  const [testimonios, setTestimonios] = useState<Testimonio[]>([]);
   const [loading, setLoading] = useState(true);
   const [cartOpen, setCartOpen] = useState(false);
 
@@ -21,10 +22,12 @@ export default function HomePage() {
     Promise.all([
       api.get<Producto[]>('/productos'),
       api.get<Configuracion>('/configuracion'),
+      api.get<Testimonio[]>('/testimonios'),
     ])
-      .then(([p, c]) => {
+      .then(([p, c, t]) => {
         setProductos(p.data);
         setConfig(c.data);
+        setTestimonios(t.data);
       })
       .catch((err) => {
         console.error('Error cargando datos:', err);
@@ -54,7 +57,7 @@ export default function HomePage() {
       <Hero config={config} />
       <SocialProof />
       <Catalogo productos={productos} />
-      <Testimonios />
+      <Testimonios testimonios={testimonios} />
       <CtaFinal config={config} />
       <Footer config={config} />
       <CartModal open={cartOpen} onClose={() => setCartOpen(false)} config={config} />
