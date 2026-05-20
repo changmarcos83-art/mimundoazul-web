@@ -17,17 +17,16 @@ export function buildWhatsappLink(
 ): string {
   const numeroLimpio = numero.replace(/[^0-9]/g, ''); // wa.me NO admite "+" ni espacios
 
-  // Cada item ocupa 2-3 líneas: nombre + cantidad + sku + precio, y luego
-  // la URL de la imagen para que WhatsApp muestre preview clickeable.
-  const lineas = items.flatMap((i) => {
-    const linea = `• ${i.cantidad}x ${i.nombre} (${i.sku}) — $${i.precio.toFixed(2)} c/u`;
-    return i.imagenUrl ? [linea, i.imagenUrl, ''] : [linea, ''];
-  });
+  // Cada item: nombre + cantidad + SKU + precio
+  const lineas = items.map(
+    (i) => `• ${i.cantidad}x ${i.nombre} (${i.sku}) — $${i.precio.toFixed(2)} c/u`,
+  );
 
   const mensaje = [
     inicial || 'Hola! Quiero comprar:',
     '',
     ...lineas,
+    '',
     `Total: $${total.toFixed(2)}`,
     '',
     final || '¿Cómo coordinamos el pago y la entrega?',

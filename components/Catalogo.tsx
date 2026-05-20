@@ -100,12 +100,59 @@ function ProductCard({ producto, onAdd }: { producto: Producto; onAdd: () => voi
         <h3 className="product-name">{producto.nombre}</h3>
         <p className="product-sku">{producto.sku}</p>
         {precioOriginal ? (
-          <p className="product-promo">
-            Promo: ${precio.toFixed(2)}{' '}
-            <span className="product-old-price">${precioOriginal.toFixed(2)}</span>
-          </p>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'baseline',
+              gap: 8,
+              flexWrap: 'wrap',
+              margin: '4px 0 12px',
+            }}
+          >
+            <span
+              style={{
+                fontSize: 13,
+                color: '#9ca3af',
+                textDecoration: 'line-through',
+                fontWeight: 500,
+              }}
+            >
+              ${precioOriginal.toFixed(2)}
+            </span>
+            <span
+              style={{
+                fontSize: 20,
+                fontWeight: 800,
+                color: '#dc2626',
+              }}
+            >
+              ${precio.toFixed(2)}
+            </span>
+            <span
+              style={{
+                fontSize: 10,
+                fontWeight: 700,
+                background: '#fee2e2',
+                color: '#991b1b',
+                padding: '2px 6px',
+                borderRadius: 4,
+                letterSpacing: 0.5,
+              }}
+            >
+              PROMO
+            </span>
+          </div>
         ) : (
-          <p className="product-promo">${precio.toFixed(2)}</p>
+          <p
+            style={{
+              fontSize: 18,
+              fontWeight: 700,
+              color: '#1d4ed8',
+              margin: '4px 0 12px',
+            }}
+          >
+            ${precio.toFixed(2)}
+          </p>
         )}
         <button
           className="btn-add-cart"
