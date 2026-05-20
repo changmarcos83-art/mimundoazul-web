@@ -1031,4 +1031,29 @@ h1, h2, h3, h4, h5, h6 {
     .footer-grid { grid-template-columns: 1fr; }
     .cta-container h2 { font-size: 36px; }
     .cart-modal { width: 100%; }
+
+    /* === Navbar compacto en móvil === */
+    .navbar { padding: 12px 0; }
+    .navbar.scrolled { padding: 10px 0; }
+    .brand-logo { height: 44px; }
+    .brand-name { font-size: 1rem; }
+    .nav-actions { gap: 10px; }
+    /* Botón WhatsApp más chico, sin texto (solo ícono) */
+    .whatsapp-btn {
+        padding: 10px 12px;
+        font-size: 0;
+    }
+    .whatsapp-btn svg {
+        width: 22px;
+        height: 22px;
+    }
+    /* Ocultar el "Cel. xxx" debajo del botón en mobile (queda raro y sobra) */
+    .whatsapp-number-sub { display: none !important; }
+}
+
+/* Pantallas muy pequeñas (iPhone SE, etc.) */
+@media (max-width: 380px) {
+    .brand-name { display: none; }
+    .brand-logo { height: 38px; }
+    .nav-actions { gap: 6px; }
 }
